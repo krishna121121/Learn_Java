@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Mastery - Complete Learning Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css">
+    <style>
+        :root {
+            /* Dark Theme */
+            --primary-dark: #1e3a8a;
+            --secondary-dark: #3b82f6;
+            --accent-dark: #f87171;
+            --light-dark: #1f2937;
+            --dark-dark: #111827;
+            --success-dark: #22c55e;
+            --warning-dark: #f59e0b;
+            --code-bg-dark: #1e293b;
+            --text-dark: #d1d5db;
+            --shadow-dark: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --bg-dark: #0f172a;
+
+            /* Light Theme */
+            --primary-light: #1e40af;
+            --secondary-light: #2563eb;
+            --accent-light: #ef4444;
+            --light-light: #f3f4f6;
+            --dark-light: #1f2937;
+            --success-light: #16a34a;
+            --warning-light: #d97706;
+            --code-bg-light: #f1f5f9;
+            --text-light: #1f2937;
+            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --bg-light: #ffffff;
+
+            /* Default to Dark Theme */
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --accent: var(--accent-dark);
+            --light: var(--light-dark);
+            --dark: var(--dark-dark);
+            --success: var(--success-dark);
+            --warning: var(--warning-dark);
+            --code-bg: var(--code-bg-dark);
+            --text: var(--text-dark);
+            --shadow: var(--shadow-dark);
+            --bg: var(--bg-dark);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --accent: var(--accent-light);
+            --light: var(--light-light);
+            --dark: var(--dark-light);
+            --success: var(--success-light);
+            --warning: var(--warning-light);
+            --code-bg: var(--code-bg-light);
+            --text: var(--text-light);
+            --shadow: var(--shadow-light);
+            --bg: var(--bg-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .theme-toggle, .reset-progress {
+            position: absolute;
+            top: 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle {
+            right: 20px;
+        }
+
+        .reset-progress {
+            right: 70px;
+        }
+
+        .theme-toggle:hover, .reset-progress:hover {
+            background: var(--accent);
+        }
+
+        .progress-bar {
+            margin-top: 20px;
+            background: rgba(255,255,255,0.1);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        .user-session {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .chapters-container {
+            background: var(--light);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .chapters-container h2 {
+            color: var(--primary);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chapter-item {
+            margin-bottom: 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .chapter-btn {
+            background: var(--light);
+            color: var(--text);
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--secondary);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .chapter-btn:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .chapter-btn.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .chapter-btn.completed::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--success);
+            margin-left: 10px;
+        }
+
+        .subchapters-container {
+            background: var(--light);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            min-height: 80vh;
+        }
+
+        .chapter-title {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chapter-description {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: var(--bg);
+            border-left: 4px solid var(--success);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .content-section {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .content-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #f3f4f6;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent);
+        }
+
+        .key-point {
+            background: var(--bg);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning {
+            background: var(--bg);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quiz-container {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: var(--light);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quiz-option:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .quiz-option.correct {
+            background: var(--success);
+            color: white;
+        }
+
+        .quiz-option.incorrect {
+            background: var(--accent);
+            color: white;
+        }
+
+        .diagram {
+            background: var(--light);
+            border: 1px solid var(--dark);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .diagram-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .diagram-content {
+            background: var(--bg);
+            border-radius: 5px;
+            padding: 15px;
+            font-style: italic;
+            color: var(--text);
+        }
+
+        .footer {
+            text-align: center;
+            margin: 50px 0;
+            color: var(--text);
+        }
+
+        .footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1000px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .chapters-container {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .chapter-title {
+                font-size: 2rem;
+            }
+
+            .theme-toggle, .reset-progress {
+                top: 10px;
+                padding: 8px;
+            }
+
+            .reset-progress {
+                right: 60px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <header>
+        <div class="container header-content">
+            <h1><i class="fab fa-java"></i> Java Mastery</h1>
+            <p class="subtitle">A complete, interactive guide to mastering Java programming from beginner to advanced levels</p>
+            <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="reset-progress" id="resetProgress" title="Reset Progress">
+                <i class="fas fa-undo"></i>
+            </button>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="user-session" id="userSession">Session: <span id="sessionId"></span></p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="chapters-container">
+                <h2><i class="fas fa-book-open"></i> Course Chapters</h2>
+                <ul class="chapters-list">
+                    <li class="chapter-item">
+                        <button class="chapter-btn active" data-chapter="1">1. Java Fundamentals <span class="counter">5</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="2">2. Object-Oriented Programming <span class="counter">5</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="3">3. Exception Handling <span class="counter">4</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="4">4. Collections Framework <span class="counter">5</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="5">5. File I/O <span class="counter">4</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="6">6. Multithreading <span class="counter">5</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="7">7. Generics & Annotations <span class="counter">4</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="8">8. Lambda Expressions & Streams <span class="counter">4</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="9">9. JDBC & Databases <span class="counter">4</span></button>
+                    </li>
+                    <li class="chapter-item">
+                        <button class="chapter-btn" data-chapter="10">10. Design Patterns <span class="counter">5</span></button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="subchapters-container">
+                <!-- Chapter 1: Java Fundamentals -->
+                <div class="chapter-content active" id="chapter-1">
+                    <h2 class="chapter-title"><i class="fas fa-seedling"></i> Java Fundamentals</h2>
+                    <p class="chapter-description">This chapter introduces the core building blocks of Java programming, including syntax, data types, control structures, methods, and basic input/output. Perfect for beginners or those revising the basics.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-code"></i> 1.1 Java Syntax & Structure</h3>
+                        <p>Java is a strongly-typed, object-oriented language with a clear structure. Every program requires a class, and the main method serves as the entry point. The file name must match the public class name.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Welcome to Java Mastery!");
+    }
+}
+                        </pre>
+                        <div class="key-point">
+                            <p><strong>Key Point:</strong> The <span class="concept-highlight">main()</span> method is required for program execution and must be declared as <code>public static void</code>.</p>
+                        </div>
+                        <div class="quiz-container">
+                            <h4>Test Your Knowledge</h4>
+                            <div class="quiz-question">
+                                <p>What is the correct signature of the main method in Java?</p>
+                                <div class="quiz-option" data-correct="true">public static void main(String[] args)</div>
+                                <div class="quiz-option" data-correct="false">public void main(String args)</div>
+                                <div class="quiz-option" data-correct="false">static void main(String[] args)</div>
+                                <div class="quiz-option" data-correct="false">public static main(String[] args)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cubes"></i> 1.2 Variables & Data Types</h3>
+                        <p>Java supports primitive and reference data types for storing different kinds of values. Primitive types include integers, floating-point numbers, booleans, and characters, while reference types include objects like Strings.</p>
+                        <ul>
+                            <li><strong>Primitive Types:</strong> <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>boolean</code>, <code>char</code></li>
+                            <li><strong>Reference Types:</strong> <code>String</code>, arrays, custom classes</li>
+                        </ul>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+int age = 25;
+double salary = 50000.50;
+boolean isActive = true;
+char grade = 'A';
+String name = "Alice";
+                        </pre>
+                        <div class="warning">
+                            <p><strong>Warning:</strong> Always initialize variables before use to avoid <code>NullPointerException</code> for reference types or undefined behavior for primitives.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-project-diagram"></i> 1.3 Control Structures</h3>
+                        <p>Control structures manage the flow of execution using conditionals (<code>if-else</code>, <code>switch</code>) and loops (<code>for</code>, <code>while</code>, <code>do-while</code>).</p>
+                        <div class="diagram">
+                            <div class="diagram-title">Control Flow Diagram</div>
+                            <div class="diagram-content">if-else → decision tree; loops → iterative execution</div>
+                        </div>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+int score = 85;
+if (score >= 90) {
+    System.out.println("Grade: A");
+} else if (score >= 80) {
+    System.out.println("Grade: B");
+} else {
+    System.out.println("Grade: C");
+}
+
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Count: " + i);
+}
+                        </pre>
+                        <div class="quiz-container">
+                            <h4>Test Your Knowledge</h4>
+                            <div class="quiz-question">
+                                <p>What will the above code output for <code>score = 85</code>?</p>
+                                <div class="quiz-option" data-correct="true">Grade: B</div>
+                                <div class="quiz-option" data-correct="false">Grade: A</div>
+                                <div class="quiz-option" data-correct="false">Grade: C</div>
+                                <div class="quiz-option" data-correct="false">Error</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cogs"></i> 1.4 Methods</h3>
+                        <p>Methods are reusable blocks of code that perform specific tasks. They improve code organization and modularity.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class Calculator {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        int result = add(5, 3);
+        System.out.println("Sum: " + result); // Output: Sum: 8
+    }
+}
+                        </pre>
+                        <div class="key-point">
+                            <p><strong>Key Point:</strong> Use appropriate access modifiers (<code>public</code>, <code>private</code>) to control method visibility.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-keyboard"></i> 1.5 Basic Input/Output</h3>
+                        <p>Java provides classes like <code>Scanner</code> for input and <code>System.out</code> for output.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.Scanner;
+
+public class InputDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        System.out.println("Hello, " + name + "!");
+        scanner.close();
+    }
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 2: Object-Oriented Programming -->
+                <div class="chapter-content" id="chapter-2">
+                    <h2 class="chapter-title"><i class="fas fa-shapes"></i> Object-Oriented Programming</h2>
+                    <p class="chapter-description">Learn the core principles of OOP: classes, objects, encapsulation, inheritance, polymorphism, and abstraction. These concepts are fundamental to writing robust Java code.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cube"></i> 2.1 Classes & Objects</h3>
+                        <p>Classes define blueprints for objects, which are instances containing state (fields) and behavior (methods).</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class Student {
+    String name;
+    int age;
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public void displayInfo() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+}
+
+Student student = new Student("Alice", 20);
+student.displayInfo(); // Output: Name: Alice, Age: 20
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-lock"></i> 2.2 Encapsulation</h3>
+                        <p>Encapsulation protects data by using private fields and public methods to control access.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class BankAccount {
+    private double balance;
+
+    public BankAccount(double balance) {
+        this.balance = balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) balance += amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+                        </pre>
+                        <div class="quiz-container">
+                            <h4>Test Your Knowledge</h4>
+                            <div class="quiz-question">
+                                <p>Why is encapsulation important?</p>
+                                <div class="quiz-option" data-correct="true">Protects data integrity</div>
+                                <div class="quiz-option" data-correct="false">Increases code complexity</div>
+                                <div class="quiz-option" data-correct="false">Reduces code reusability</div>
+                                <div class="quiz-option" data-correct="false">Prevents method overriding</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-sitemap"></i> 2.3 Inheritance</h3>
+                        <p>Inheritance allows a subclass to inherit properties and methods from a superclass.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class Vehicle {
+    protected String brand;
+
+    public Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    public void honk() {
+        System.out.println("Honk!");
+    }
+}
+
+public class Car extends Vehicle {
+    private String model;
+
+    public Car(String brand, String model) {
+        super(brand);
+        this.model = model;
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-sync-alt"></i> 2.4 Polymorphism</h3>
+                        <p>Polymorphism enables objects to be treated as instances of their parent class, with method overriding for runtime behavior.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class Animal {
+    public void makeSound() {
+        System.out.println("Generic sound");
+    }
+}
+
+public class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-layer-group"></i> 2.5 Abstraction</h3>
+                        <p>Abstraction hides implementation details using abstract classes and interfaces.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public abstract class Shape {
+    public abstract double area();
+}
+
+public class Circle extends Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 3: Exception Handling -->
+                <div class="chapter-content" id="chapter-3">
+                    <h2 class="chapter-title"><i class="fas fa-exclamation-triangle"></i> Exception Handling</h2>
+                    <p class="chapter-description">Learn to manage errors and exceptional conditions using try-catch blocks, custom exceptions, and best practices.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-bug"></i> 3.1 Exception Types</h3>
+                        <p>Exceptions are divided into checked (compile-time) and unchecked (runtime) categories.</p>
+                        <div class="diagram">
+                            <div class="diagram-title">Exception Hierarchy</div>
+                            <div class="diagram-content">Throwable → Error, Exception → IOException, RuntimeException</div>
+                        </div>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+try {
+    int[] arr = new int[5];
+    System.out.println(arr[10]);
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Error: " + e.getMessage());
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-shield-alt"></i> 3.2 Try-Catch-Finally</h3>
+                        <p>Use try-catch to handle exceptions and finally for cleanup.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+try {
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero");
+} finally {
+    System.out.println("Cleanup code");
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-forward"></i> 3.3 Throws Keyword</h3>
+                        <p>Declare exceptions that a method might throw using <code>throws</code>.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.io.*;
+
+public class FileReader {
+    public String readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line = reader.readLine();
+        reader.close();
+        return line;
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cogs"></i> 3.4 Custom Exceptions</h3>
+                        <p>Create custom exceptions by extending <code>Exception</code>.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class Person {
+    public void setAge(int age) throws InvalidAgeException {
+        if (age < 0) throw new InvalidAgeException("Age cannot be negative");
+    }
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 4: Collections Framework -->
+                <div class="chapter-content" id="chapter-4">
+                    <h2 class="chapter-title"><i class="fas fa-list"></i> Collections Framework</h2>
+                    <p class="chapter-description">Explore Java's Collections Framework for managing groups of objects efficiently.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-list-ul"></i> 4.1 Introduction to Collections</h3>
+                        <p>The Collections Framework provides interfaces like <code>List</code>, <code>Set</code>, and <code>Map</code>, and implementations like <code>ArrayList</code> and <code>HashMap</code>.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<>();
+names.add("Alice");
+names.add("Bob");
+System.out.println(names); // Output: [Alice, Bob]
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-list-ol"></i> 4.2 List Interface</h3>
+                        <p><code>List</code> allows ordered, duplicate elements.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.LinkedList;
+
+LinkedList<Integer> numbers = new LinkedList<>();
+numbers.add(1);
+numbers.add(2);
+numbers.removeFirst();
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-tags"></i> 4.3 Set Interface</h3>
+                        <p><code>Set</code> ensures unique elements.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.HashSet;
+
+HashSet<String> uniqueNames = new HashSet<>();
+uniqueNames.add("Alice");
+uniqueNames.add("Alice"); // Ignored
+System.out.println(uniqueNames); // Output: [Alice]
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-map"></i> 4.4 Map Interface</h3>
+                        <p><code>Map</code> stores key-value pairs.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.HashMap;
+
+HashMap<String, Integer> ages = new HashMap<>();
+ages.put("Alice", 25);
+ages.put("Bob", 30);
+System.out.println(ages.get("Alice")); // Output: 25
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-sort"></i> 4.5 Sorting & Iterating</h3>
+                        <p>Use <code>Collections.sort()</code> and iterators to process collections.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.*;
+
+ArrayList<Integer> numbers = new ArrayList<>();
+numbers.add(3);
+numbers.add(1);
+numbers.add(2);
+Collections.sort(numbers);
+System.out.println(numbers); // Output: [1, 2, 3]
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 5: File I/O -->
+                <div class="chapter-content" id="chapter-5">
+                    <h2 class="chapter-title"><i class="fas fa-file"></i> File I/O</h2>
+                    <p class="chapter-description">Learn to read from and write to files using Java's I/O classes.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-file-import"></i> 5.1 Reading Files</h3>
+                        <p>Use <code>BufferedReader</code> for efficient file reading.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.io.*;
+
+try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+    String line;
+    while ((line = reader.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-file-export"></i> 5.2 Writing Files</h3>
+                        <p>Use <code>BufferedWriter</code> for writing to files.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.io.*;
+
+try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+    writer.write("Hello, Java!");
+} catch (IOException e) {
+    e.printStackTrace();
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-folder-open"></i> 5.3 File Class</h3>
+                        <p>The <code>File</code> class manages file and directory operations.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.io.File;
+
+File file = new File("example.txt");
+if (file.exists()) {
+    System.out.println("File exists!");
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-stream"></i> 5.4 NIO Package</h3>
+                        <p>Java's NIO package offers advanced file operations.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.nio.file.*;
+
+Path path = Paths.get("example.txt");
+Files.write(path, "Hello, NIO!".getBytes());
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 6: Multithreading -->
+                <div class="chapter-content" id="chapter-6">
+                    <h2 class="chapter-title"><i class="fas fa-threads"></i> Multithreading</h2>
+                    <p class="chapter-description">Learn to create and manage multiple threads for concurrent execution.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-play"></i> 6.1 Thread Creation</h3>
+                        <p>Create threads by extending <code>Thread</code> or implementing <code>Runnable</code>.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread running");
+    }
+}
+
+MyThread thread = new MyThread();
+thread.start();
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-lock"></i> 6.2 Synchronization</h3>
+                        <p>Use <code>synchronized</code> to prevent race conditions.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class Counter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-hourglass"></i> 6.3 Thread States</h3>
+                        <p>Threads have states like NEW, RUNNABLE, BLOCKED, and TERMINATED.</p>
+                        <div class="diagram">
+                            <div class="diagram-title">Thread Lifecycle</div>
+                            <div class="diagram-content">NEW → RUNNABLE → BLOCKED/WAITING → TERMINATED</div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cog"></i> 6.4 Executor Framework</h3>
+                        <p>Use <code>ExecutorService</code> for thread pool management.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.concurrent.*;
+
+ExecutorService executor = Executors.newFixedThreadPool(2);
+executor.submit(() -> System.out.println("Task executed"));
+executor.shutdown();
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-exchange-alt"></i> 6.5 Concurrency Utilities</h3>
+                        <p>Use classes like <code>CountDownLatch</code> and <code>Semaphore</code>.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.concurrent.*;
+
+CountDownLatch latch = new CountDownLatch(1);
+new Thread(() -> {
+    System.out.println("Task");
+    latch.countDown();
+}).start();
+latch.await();
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 7: Generics & Annotations -->
+                <div class="chapter-content" id="chapter-7">
+                    <h2 class="chapter-title"><i class="fas fa-code-branch"></i> Generics & Annotations</h2>
+                    <p class="chapter-description">Learn to write type-safe and reusable code with generics and metadata with annotations.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-box"></i> 7.1 Generics</h3>
+                        <p>Generics enable type-safe collections and methods.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<>();
+names.add("Alice");
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-code"></i> 7.2 Generic Classes</h3>
+                        <p>Create reusable classes with generic types.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class Box<T> {
+    private T item;
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public T getItem() {
+        return item;
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-tag"></i> 7.3 Annotations</h3>
+                        <p>Annotations provide metadata for code.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+@Override
+public String toString() {
+    return "Example";
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cogs"></i> 7.4 Custom Annotations</h3>
+                        <p>Create custom annotations for specific needs.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.lang.annotation.*;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface MyAnnotation {
+    String value();
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 8: Lambda Expressions & Streams -->
+                <div class="chapter-content" id="chapter-8">
+                    <h2 class="chapter-title"><i class="fas fa-stream"></i> Lambda Expressions & Streams</h2>
+                    <p class="chapter-description">Master functional programming with lambda expressions and process collections efficiently with streams.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-arrow-right"></i> 8.1 Lambda Expressions</h3>
+                        <p>Lambdas provide concise syntax for functional interfaces.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.function.Predicate;
+
+Predicate<String> isLong = s -> s.length() > 5;
+System.out.println(isLong.test("Hello")); // Output: false
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-filter"></i> 8.2 Streams API</h3>
+                        <p>Streams process collections in a functional style.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.*;
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+numbers.stream()
+       .filter(n -> n % 2 == 0)
+       .forEach(System.out::println);
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cogs"></i> 8.3 Stream Operations</h3>
+                        <p>Use map, filter, reduce, and collect for data processing.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.*;
+
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+List<String> upper = names.stream()
+                         .map(String::toUpperCase)
+                         .collect(Collectors.toList());
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-check"></i> 8.4 Functional Interfaces</h3>
+                        <p>Use built-in interfaces like <code>Function</code>, <code>Consumer</code>, and <code>Supplier</code>.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.function.Consumer;
+
+Consumer<String> printer = System.out::println;
+printer.accept("Hello, Streams!");
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 9: JDBC & Databases -->
+                <div class="chapter-content" id="chapter-9">
+                    <h2 class="chapter-title"><i class="fas fa-database"></i> JDBC & Databases</h2>
+                    <p class="chapter-description">Connect Java applications to databases using JDBC for data management.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-link"></i> 9.1 JDBC Basics</h3>
+                        <p>JDBC connects Java to relational databases.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.sql.*;
+
+Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "user", "pass");
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-table"></i> 9.2 Prepared Statements</h3>
+                        <p>Use <code>PreparedStatement</code> for secure queries.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.sql.*;
+
+PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
+pstmt.setInt(1, 1);
+ResultSet rs = pstmt.executeQuery();
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-sync"></i> 9.3 Transaction Management</h3>
+                        <p>Manage database transactions for data integrity.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.sql.*;
+
+conn.setAutoCommit(false);
+try {
+    PreparedStatement pstmt = conn.prepareStatement("UPDATE accounts SET balance = ?");
+    pstmt.setDouble(1, 1000.0);
+    pstmt.executeUpdate();
+    conn.commit();
+} catch (SQLException e) {
+    conn.rollback();
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-tools"></i> 9.4 Connection Pooling</h3>
+                        <p>Use connection pooling for efficient database access.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
+
+BasicDataSource ds = new BasicDataSource();
+ds.setUrl("jdbc:mysql://localhost:3306/db");
+ds.setUsername("user");
+ds.setPassword("pass");
+Connection conn = ds.getConnection();
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Chapter 10: Design Patterns -->
+                <div class="chapter-content" id="chapter-10">
+                    <h2 class="chapter-title"><i class="fas fa-puzzle-piece"></i> Design Patterns</h2>
+                    <p class="chapter-description">Learn reusable solutions to common software design problems.</p>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cube"></i> 10.1 Singleton Pattern</h3>
+                        <p>Ensures a class has only one instance.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public class Singleton {
+    private static Singleton instance;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-industry"></i> 10.2 Factory Pattern</h3>
+                        <p>Creates objects without specifying the exact class.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public interface Animal {
+    void speak();
+}
+
+public class Dog implements Animal {
+    public void speak() { System.out.println("Woof!"); }
+}
+
+public class AnimalFactory {
+    public Animal createAnimal(String type) {
+        if ("Dog".equals(type)) return new Dog();
+        return null;
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-eye"></i> 10.3 Observer Pattern</h3>
+                        <p>Defines a one-to-many dependency between objects.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+import java.util.*;
+
+public class Subject {
+    private List<Observer> observers = new ArrayList<>();
+
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update();
+        }
+    }
+}
+
+public interface Observer {
+    void update();
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-cogs"></i> 10.4 Strategy Pattern</h3>
+                        <p>Defines a family of algorithms and makes them interchangeable.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public interface PaymentStrategy {
+    void pay(int amount);
+}
+
+public class CreditCardPayment implements PaymentStrategy {
+    public void pay(int amount) {
+        System.out.println("Paid " + amount + " via Credit Card");
+    }
+}
+                        </pre>
+                    </div>
+
+                    <div class="content-section">
+                        <h3><i class="fas fa-tools"></i> 10.5 Decorator Pattern</h3>
+                        <p>Adds responsibilities to objects dynamically.</p>
+                        <pre class="code-block language-java"><button class="copy-btn">Copy</button>
+public interface Coffee {
+    double cost();
+}
+
+public class SimpleCoffee implements Coffee {
+    public double cost() { return 2.0; }
+}
+
+public class MilkDecorator implements Coffee {
+    private Coffee coffee;
+
+    public MilkDecorator(Coffee coffee) {
+        this.coffee = coffee;
+    }
+
+    public double cost() {
+        return coffee.cost() + 0.5;
+    }
+}
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="content-section" style="text-align: center; margin-top: 30px;">
+                    <h3><i class="fas fa-book"></i> Continue Your Journey</h3>
+                    <p>Explore more chapters or revisit previous ones to solidify your Java knowledge. Practice coding and try the quizzes to test your understanding!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Java Mastery | The Ultimate Java Learning Guide</p>
+            <p>Created with <i class="fas fa-heart" style="color: var(--accent);"></i> for aspiring Java developers</p>
+            <p><a href="https://x.ai" target="_blank">Powered by xAI</a></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate new session ID on every page load
+            const sessionId = 'user-' + Math.random().toString(36).substr(2, 9);
+            document.getElementById('sessionId').textContent = sessionId;
+
+            // Clear previous progress and initialize new progress
+            const progressKey = `completedChapters_${sessionId}`;
+            localStorage.setItem(progressKey, JSON.stringify([]));
+            let completedChapters = [];
+
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const themeIcon = themeToggle.querySelector('i');
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.dataset.theme;
+                body.dataset.theme = currentTheme === 'dark' ? 'light' : 'dark';
+                themeIcon.className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                localStorage.setItem('theme', body.dataset.theme);
+            });
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            body.dataset.theme = savedTheme;
+            themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+
+            // Progress tracking
+            const chapterButtons = document.querySelectorAll('.chapter-btn');
+            const progressFill = document.getElementById('progressFill');
+            const resetProgress = document.getElementById('resetProgress');
+
+            chapterButtons.forEach((button, index) => {
+                button.classList.remove('completed'); // Ensure no chapters are marked completed on load
+
+                button.addEventListener('click', () => {
+                    chapterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    document.querySelectorAll('.chapter-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+
+                    document.getElementById(`chapter-${button.dataset.chapter}`).classList.add('active');
+                    document.querySelector('.subchapters-container').scrollTop = 0;
+
+                    if (!completedChapters.includes(index)) {
+                        completedChapters.push(index);
+                        localStorage.setItem(progressKey, JSON.stringify(completedChapters));
+                        button.classList.add('completed');
+                        updateProgress();
+                    }
+                });
+            });
+
+            // Reset progress
+            resetProgress.addEventListener('click', () => {
+                if (confirm('Are you sure you want to reset your progress?')) {
+                    completedChapters = [];
+                    localStorage.setItem(progressKey, JSON.stringify(completedChapters));
+                    chapterButtons.forEach(btn => btn.classList.remove('completed'));
+                    updateProgress();
+                    alert('Progress reset successfully!');
+                }
+            });
+
+            // Copy code functionality
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const code = btn.parentElement.textContent.replace('Copy', '').trim();
+                    navigator.clipboard.writeText(code);
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => btn.textContent = 'Copy', 2000);
+                });
+            });
+
+            // Quiz functionality
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const question = option.parentElement;
+                    question.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('correct', 'incorrect');
+                        opt.style.pointerEvents = 'none';
+                    });
+                    option.classList.add(option.dataset.correct === 'true' ? 'correct' : 'incorrect');
+                });
+            });
+
+            // Progress tracking
+            function updateProgress() {
+                const totalChapters = chapterButtons.length;
+                const progress = (completedChapters.length / totalChapters) * 100;
+                progressFill.style.width = `${progress}%`;
+            }
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
